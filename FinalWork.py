@@ -50,8 +50,24 @@ def alt_compromisso(data, hora, descricao):
         inserir_compromisso(data, hora, descricao)
 
 
-# Inicializacao do programa, selecionando funcoes por numerais
+# função para excluir compromissos do dia ou somente de um horário
 
+def exc_compromisso(data, hora):
+    if data not in agenda:
+        print("Nenhum compromisso encontrado nesta data.")
+        return
+    elif hora is not None and len(hora) == 0:
+        del agenda[data]
+        print("Compromissos do dia excluídos com sucesso!")
+    elif hora in agenda[data]:
+        del agenda[data][hora]
+        print("Compromisso excluído com sucesso!")
+    else:
+        print("Nenhum compromisso encontrado ")
+    return
+
+
+# Inicializacao do programa, selecionando funcoes por numerais
 while True:
     print("\nAgenda de Compromissos")
     print("1. Incluir Compromisso")
@@ -83,8 +99,16 @@ while True:
             "Informe a hora do compromisso que deseja alterar (hh:mm): ")
         descricao = input("Informe a descrição do compromisso: ")
         alt_compromisso(data, hora, descricao)
+    elif escolha == '4':
+        data = input(
+            "Informe a data do compromisso que deseja excluir (dd/mm/aaaa):")
+        hora = input(
+            "Informe a hora (hh:mm) do compromisso que deseja excluir (não inclua nada para excluir compromissos do dia): ")
+        exc_compromisso(data, hora)
+
     elif escolha == '5':
-        print(agenda)
+        for i, valor in agenda.items():
+            print(f"{i}: {valor}")
 
     elif escolha == '6':
         break
